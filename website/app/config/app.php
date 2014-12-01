@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'debug' => false,
+	'debug' => true,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -124,6 +124,7 @@ return array(
 
 		 //dependencies
 		'Cartalyst\Sentry\SentryServiceProvider',
+		'Way\Generators\GeneratorsServiceProvider',
 
 	),
 
