@@ -15,3 +15,5 @@ Route::get('/', function()
 {
 	return View::make('hello');
 });
+
+Route::get('/simple', ['as' => 'simple', 'uses' => 'FeedController@index']);
