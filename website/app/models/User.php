@@ -23,6 +23,15 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password', 'remember_token');
 
+	public static $signup_rules = [
+    'email'      => 'required|email|unique:users',
+    'password'   => 'required|between:6,32',
+    'password_confirm'   => 'required|between:6,32|same:password',
+  ];
+
+	public static $edit_rules = array(
+  );
+
 
 	public function feeds() {
 		return $this->hasMany('Feed');

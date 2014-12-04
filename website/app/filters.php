@@ -33,19 +33,33 @@ App::after(function($request, $response)
 |
 */
 
-Route::filter('auth', function()
-{
-	if (Auth::guest())
-	{
-		if (Request::ajax())
-		{
+// Route::filter('auth', function()
+// {
+// 	if (Auth::guest())
+// 	{
+// 		if (Request::ajax())
+// 		{
+// 			return Response::make('Unauthorized', 401);
+// 		}
+// 		else
+// 		{
+// 			return Redirect::guest('login');
+// 		}
+// 	}
+// });
+
+
+Route::filter('auth', function() {
+  // Check if the user is logged in
+  if ( ! Sentry::check()) {
+
+  	if (Request::ajax()) {
 			return Response::make('Unauthorized', 401);
 		}
-		else
-		{
-			return Redirect::guest('login');
-		}
-	}
+		
+    Session::put('loginRedirect', Request::url());
+    return Redirect::route('signin');
+  }
 });
 
 
@@ -88,3 +102,13 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
+
+// Route::filter('csrf', function() {
+//   $request_token = Request::header('X-CSRF-Token');
+//   $token = Request::ajax() ? (!empty($request_token) ? $request_token : Input::get('_token')) : Input::get('_token');
+
+// 	if (Session::token() !== $token) {
+// 		throw new Illuminate\Session\TokenMismatchException;
+// 	}
+// });
+

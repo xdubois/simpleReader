@@ -36,8 +36,14 @@ class FeedController extends \BaseController {
 						 'http://www.bonjourmadame.fr/',
 						 'http://feeds.feedburner.com/blogeekch'];
 
-		$this->simplepie->set_feed_url($urls);
+		$sql ="mysql://root:@localhost:3306/simplepie";
 		$this->simplepie->enable_cache(true);
+		$this->simplepie->set_cache_location($sql);
+		// $registry = $this->simplepie->get_registry();
+		// $simplepie_cache = SimplePie_Cache::create($sql, 'test', NULL);
+		// dd($simplepie_cache);
+		// dd($registry->register('Cache', $simplepie_cache_mysql ));
+		$this->simplepie->set_feed_url($urls);
 		$this->simplepie->strip_htmltags($this->striped_tags);
 		$this->simplepie->handle_content_type();
 		$this->simplepie->force_feed();
@@ -60,7 +66,7 @@ class FeedController extends \BaseController {
 
 		// $this->simplepie->get_item_quantity();
 
-		return View::make('feeds.index', compact('items'));
+		return View::make('front.feeds.index', compact('items'));
 	}
 
 	/**
