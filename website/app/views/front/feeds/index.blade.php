@@ -42,7 +42,7 @@
       <td>{{ $feed->description }} </td>
       <td>{{ $feed->website }} </td>
       <td>{{ $feed->url }} </td>
-      <td>{{ $feed->category == null ? '' : $feed->category->name }} </td>
+      <td>  {{ Form::select('category', $categories, $feed->category == null ? '' : $feed->category->id, ['class' => 'form-control category-update']) }} </td>
       <td>{{ $feed->lastUpdate }} </td>
     </tr>
 

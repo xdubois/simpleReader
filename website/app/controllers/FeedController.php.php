@@ -83,6 +83,9 @@ class FeedController extends AuthorizedController {
     }
     $this->user->feeds()->save($this->feed);
 
+    //Grab the first items
+    $this->getArticles();
+
     return Redirect::back()->with('success', Lang::get('feed.success'));
 	}
 
@@ -142,6 +145,21 @@ class FeedController extends AuthorizedController {
 		$this->simplepie->force_feed();
 
 		return $this->simplepie->init();
+	}
+
+	private function getArticles() {
+		$items = $this->simplepie->get_items(0, $this->user->articleCacheMax);
+		foreach ($items as $item) {
+			$article = new Article();
+			$article->guid = md5($item->get_link());
+			$article->title = $item->get_title();
+			$article->creator = ($item->get_author() === NULL ?: $item->get_author()->name);
+			$article->link = $item->get_link();
+			$article->content = $item->get_content();
+			$article->pubDate = $item->get_date();
+			$this->feed->articles()->save($article);
+		}
+
 	}
 
 }

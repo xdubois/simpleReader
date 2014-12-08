@@ -8,4 +8,8 @@ class Article extends Eloquent {
 	public function feed() {
 		$this->belongsTo('Feed');
 	}
+
+  public function getDates() {
+    return ['created_at', 'updated_at', 'pubDate'];
+  }
 }

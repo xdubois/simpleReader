@@ -5,6 +5,7 @@ class Feed extends Eloquent {
 	protected $guarded = array();
 
 	public function getRules() {
+		return [];
 		return [
 			'url' => 'unique:feeds,url,NULL,id,user_id,'. Sentry::getuser()->id .''
 		];

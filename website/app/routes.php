@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', ['as' => 'home', 'uses' => 'HomeController@showWelcome']);
+Route::get('/', ['as' => 'home', 'uses' => 'ArticleController@index']);
 
 Route::get('/simple', ['as' => 'simple', 'uses' => 'FeedController@index']);
 
