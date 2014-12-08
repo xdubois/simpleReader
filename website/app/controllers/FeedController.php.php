@@ -132,9 +132,9 @@ class FeedController extends AuthorizedController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
-	{
-		//
+	public function destroy($id) {
+		Feed::destroy($id);
+		return Redirect::back()->with('success', Lang::get('feed.deleted'));
 	}
 
 	private function initPie($url) {

@@ -25,7 +25,7 @@ class CreateArticlesTable extends Migration {
 			$table->boolean('unread')->nullable();
 			
 			$table->integer('feed_id')->unsigned();
-			$table->foreign('feed_id')->references('id')->on('feeds');
+			$table->foreign('feed_id')->references('id')->on('feeds')->onDelete('cascade');
 			$table->timestamps();
 		});
 	}
