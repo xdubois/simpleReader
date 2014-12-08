@@ -36,12 +36,12 @@
       <th>url</th>
       <th>category</th>
       <th>Last Update</th>
-      <th colspan="1"></th>
+      <th></th>
     </thead>
     @foreach ($feeds as $feed)  
     <tr data-update-category-url="{{ route('ajax.update.category') }}" data-feed-id="{{ $feed->id }}">
       <td>{{ $feed->name }}</td>
-      <td>{{ $feed->description }}</td>
+      <td>{{ Str::limit($feed->description, 30) }}</td>
       <td>{{ $feed->website }}</td>
       <td>{{ $feed->url }}</td>
       <td>  {{ Form::select('category', $categories, $feed->category == null ? '' : $feed->category->id, ['class' => 'form-control category-update', 'data-feed-id' => $feed->id]) }} </td>

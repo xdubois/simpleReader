@@ -156,7 +156,7 @@ class FeedController extends AuthorizedController {
 			$article->creator = ($item->get_author() === NULL ?: $item->get_author()->name);
 			$article->link = $item->get_link();
 			$article->content = $item->get_content();
-			$article->pubDate = $item->get_date();
+			$article->pubDate = $item->get_gmdate('Y-m-d H:i:s');
 			$this->feed->articles()->save($article);
 		}
 
