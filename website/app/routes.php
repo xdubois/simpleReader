@@ -58,3 +58,7 @@ Route::group(array('prefix' => 'feed'), function() {
   Route::post('store', ['as' => 'feed.store', 'uses' => 'FeedController@store']);
 });
 
+//Ajax request
+Route::group(array('prefix' => 'ajax'), function() {
+ Route::post('update-category', ['as' => 'ajax.update.category', 'uses' => 'CategoryController@update']);
+});

@@ -27,6 +27,7 @@
 
 <div class="span12">
   <h2>Feeds</h2>
+  <div id="ajax"></div>
   <table class="table hover">
     <thead>
       <th>Name</th>
@@ -37,12 +38,12 @@
       <th>Last Update</th>
     </thead>
     @foreach ($feeds as $feed)  
-    <tr>
+    <tr data-update-category-url="{{ route('ajax.update.category') }}" data-feed-id="{{ $feed->id }}">
       <td>{{ $feed->name }} </td>
       <td>{{ $feed->description }} </td>
       <td>{{ $feed->website }} </td>
       <td>{{ $feed->url }} </td>
-      <td>  {{ Form::select('category', $categories, $feed->category == null ? '' : $feed->category->id, ['class' => 'form-control category-update']) }} </td>
+      <td>  {{ Form::select('category', $categories, $feed->category == null ? '' : $feed->category->id, ['class' => 'form-control category-update', 'data-feed-id' => $feed->id]) }} </td>
       <td>{{ $feed->lastUpdate }} </td>
     </tr>
 

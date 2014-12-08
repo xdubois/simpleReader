@@ -1,28 +1,21 @@
 <?php
 
-class ArticleController extends AuthorizedController {
+class CategoryController extends AuthorizedController {
 
 	/**
 	 * Display a listing of the resource.
-	 * GET /article
+	 * GET /category
 	 *
 	 * @return Response
 	 */
-	public function index() {
-		$feeds = $this->user->feeds()->get();
-		$items = [];
-		foreach ($feeds as $feed) {
-			foreach ($feed->articles()->get() as $item) {
-				$items[] = $item;
-			}
-		}
-
-		return View::make('front.articles.index', compact('items'));
+	public function index()
+	{
+		//
 	}
 
 	/**
 	 * Show the form for creating a new resource.
-	 * GET /article/create
+	 * GET /category/create
 	 *
 	 * @return Response
 	 */
@@ -33,7 +26,7 @@ class ArticleController extends AuthorizedController {
 
 	/**
 	 * Store a newly created resource in storage.
-	 * POST /article
+	 * POST /category
 	 *
 	 * @return Response
 	 */
@@ -44,7 +37,7 @@ class ArticleController extends AuthorizedController {
 
 	/**
 	 * Display the specified resource.
-	 * GET /article/{id}
+	 * GET /category/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -56,7 +49,7 @@ class ArticleController extends AuthorizedController {
 
 	/**
 	 * Show the form for editing the specified resource.
-	 * GET /article/{id}/edit
+	 * GET /category/{id}/edit
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -68,18 +61,23 @@ class ArticleController extends AuthorizedController {
 
 	/**
 	 * Update the specified resource in storage.
-	 * PUT /article/{id}
+	 * PUT /category/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id) {
+	public function update() {
 		
+		$feed = Feed::findOrFail(Input::get('feed_id'));
+		$feed->category_id = Input::get('category_id') == 0 ? null : Input::get('category_id');
+		$feed->save();
+
+		return Response::make('success', 200);
 	}
 
 	/**
 	 * Remove the specified resource from storage.
-	 * DELETE /article/{id}
+	 * DELETE /category/{id}
 	 *
 	 * @param  int  $id
 	 * @return Response
@@ -88,6 +86,5 @@ class ArticleController extends AuthorizedController {
 	{
 		//
 	}
-
 
 }
