@@ -95,20 +95,13 @@ Route::filter('guest', function()
 |
 */
 
-Route::filter('csrf', function()
-{
-	if (Session::token() !== Input::get('_token'))
-	{
-		throw new Illuminate\Session\TokenMismatchException;
-	}
+Route::filter('csrf', function() {
+  $request_token = Request::header('X-CSRF-Token');
+  $token = Request::ajax() ? (!empty($request_token) ? $request_token : Input::get('_token')) : Input::get('_token');
+
+  if (Session::token() !== $token) {
+    throw new Illuminate\Session\TokenMismatchException;
+  }
 });
 
-// Route::filter('csrf', function() {
-//   $request_token = Request::header('X-CSRF-Token');
-//   $token = Request::ajax() ? (!empty($request_token) ? $request_token : Input::get('_token')) : Input::get('_token');
-
-// 	if (Session::token() !== $token) {
-// 		throw new Illuminate\Session\TokenMismatchException;
-// 	}
-// });
 

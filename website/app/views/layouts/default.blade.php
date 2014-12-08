@@ -7,12 +7,12 @@
     simepleReader
     @show
   </title>
-  <meta name="viewport" content="width=device-width" />
+  <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
   <!-- Optional theme -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
   <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
   {{ HTML::style('assets/css/style.css') }}
 </head>
 <body>
@@ -32,7 +32,7 @@
         <!-- <li class="active"><a href="#">Home</a></li> -->
         <li><a href="{{ route('simple') }}">feeds</a></li>
         @if (Sentry::check())
-          <li><a href="{{ route('logout') }}">logout</a></li>
+        <li><a href="{{ route('logout') }}">logout</a></li>
         @endif
       </ul>
     </div><!--/.nav-collapse -->
@@ -43,12 +43,15 @@
 
   <div class="row">
     <div class="span12">
-    @include('layouts.notifications')
+      @include('layouts.notifications')
     </div>
   </div>
   @yield('content')
 
-</div><!-- /.container -->  
+</div><!-- /.container --> 
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+{{ HTML::script('assets/js/script.js') }}
 @yield('js')
 </body>
 </html>
