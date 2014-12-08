@@ -19,7 +19,7 @@ class CreateArticlesTable extends Migration {
 			$table->string('title')->nullable();
 			$table->string('creator')->nullable();
 			$table->string('link')->nullable();
-			$table->string('content')->nullable();
+			$table->text('content')->nullable();
 			$table->timestamp('pubDate')->nullable();
 			$table->boolean('favorite')->default(0);
 			$table->boolean('unread')->nullable();
