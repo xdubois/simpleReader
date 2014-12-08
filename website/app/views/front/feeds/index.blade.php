@@ -7,40 +7,47 @@
 
 
 @section('content')
-
-  
 <div class="span12">
-  <h2>Title</h2>
-@foreach ($items as $item)  
-<div class="dubois-post" id="item-id">    
-<div class="row-fluid">
-    <div class="span9">
-        <h2>
-          <a href="{{ $item->get_link() }}" class="item-click" style="" target="_blank">
-            {{ $item->get_title() }}
-          </a>   
-        </h2>
-       <p> {{ $item->get_content() }} </p>
-    </div>
+  <h2>Add feed</h2>
+  {{ Form::open(array('route' => 'feed.store')) }}
+  <div class="form-group {{ $errors->has('url') ? 'has-error' : ''}}">
+    {{ Form::label('url', Lang::get('feed.url') ) }}
+    {{ Form::text('url', null, ['class' => 'form-control']) }}
+    {{ $errors->has('url') ? '<p class="error">' . $errors->first('url') .'</p>' : '' }}
+  </div>
+  <div class="form-group">
+    {{ Form::select('category', $categories, null, ['class' => 'form-control']) }}
+  </div>
+  <button type="submit" class="btn btn-primary btn-sm"> @lang('auth.signin_button') </button>
 
-    <div class="row-fluid">
-        <div class="span6">
-          <span class="glyphicon glyphicon-star"> </span>
-          <span class="glyphicon glyphicon-star-empty"></span> 
-          Favorite
+  {{ Form::close() }}
 
-          <input type="checkbox" checked="checked" class="unread" />
-          Keep Unread
-
-        <div class="span3">
-        <p class="text-right"><em>{{ ($item->get_author() === NULL ?: $item->get_author()->name) .' '. $item->get_date() }} </em></p>
-        </div>
-    </div>
-
-
-    </div>
-    <hr />
 </div>
-@endforeach
+
+
+<div class="span12">
+  <h2>Feeds</h2>
+  <table class="table hover">
+    <thead>
+      <th>Name</th>
+      <th>description</th>
+      <th>website</th>
+      <th>url</th>
+      <th>category</th>
+      <th>Last Update</th>
+    </thead>
+    @foreach ($feeds as $feed)  
+    <tr>
+      <td>{{ $feed->name }} </td>
+      <td>{{ $feed->description }} </td>
+      <td>{{ $feed->website }} </td>
+      <td>{{ $feed->url }} </td>
+      <td>{{ $feed->category == null ? '' : $feed->category->name }} </td>
+      <td>{{ $feed->lastUpdate }} </td>
+    </tr>
+
+    @endforeach
+  </table>
+</div>
 
 @stop

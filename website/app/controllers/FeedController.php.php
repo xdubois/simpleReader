@@ -1,8 +1,9 @@
 <?php
 
-class FeedController extends \BaseController {
+class FeedController extends AuthorizedController {
 
 	private $simplepie;
+	private $feed;
 	private $striped_tags = ['base',
 		'blink',
 		'body',
@@ -20,8 +21,10 @@ class FeedController extends \BaseController {
 		'style',
 	];
 
-	public function __construct(SimplePie $simplepie) {
-		$this->simplepie = $simplepie;
+	public function __construct() {
+		$this->simplepie = new SimplePie();
+		$this->feed =  new Feed();
+		parent::__construct();
 	}
 
 	/**
@@ -32,41 +35,10 @@ class FeedController extends \BaseController {
 	 */
 	public function index() {
 
-		$urls = ['http://feeds.betacie.com/viedemerde',
-						 'http://www.bonjourmadame.fr/',
-						 'http://feeds.feedburner.com/blogeekch'];
+		$feeds = $this->user->feeds()->with('category')->get();
+		$categories = ['none'] + $this->user->categories->lists('name', 'id');
 
-		$sql ="mysql://root:@localhost:3306/simplepie";
-		$this->simplepie->enable_cache(true);
-		$this->simplepie->set_cache_location($sql);
-		// $registry = $this->simplepie->get_registry();
-		// $simplepie_cache = SimplePie_Cache::create($sql, 'test', NULL);
-		// dd($simplepie_cache);
-		// dd($registry->register('Cache', $simplepie_cache_mysql ));
-		$this->simplepie->set_feed_url($urls);
-		$this->simplepie->strip_htmltags($this->striped_tags);
-		$this->simplepie->handle_content_type();
-		$this->simplepie->force_feed();
-
-		$this->simplepie->set_item_limit(2);
-		
-		$success = $this->simplepie->init();
-
-		//if($this->simplepie->error());
-		//
-		//get_description();
-		//get_author(s);
-		//get_link(s)
-		//get_type()
-		//get_title()
-		//get_permalink()
-		//get_favicon();
-
-		$items = $this->simplepie->get_items();
-
-		// $this->simplepie->get_item_quantity();
-
-		return View::make('front.feeds.index', compact('items'));
+		return View::make('front.feeds.index', compact('feeds', 'categories'));
 	}
 
 	/**
@@ -86,9 +58,32 @@ class FeedController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function store()
-	{
-		//
+	public function store() {
+
+		$validator = Validator::make(Input::all(), $this->feed->getRules());
+    if ($validator->fails()) {
+      return Redirect::back()->withInput()
+      											 ->withErrors($validator);
+    }
+
+    if (! $this->initPie(Input::get('url'))) {
+    	//error
+    	return Redirect::back()->withInput()
+    												 ->with('error', $this->simplepie->error());
+    }
+    //save feed
+    $this->feed->name = $this->simplepie->get_title();
+    $this->feed->description = $this->simplepie->get_description();
+    $this->feed->website = $this->simplepie->get_permalink();
+    $this->feed->url = $this->simplepie->subscribe_url();
+    $this->feed->lastUpdate = Carbon\Carbon::now();
+    $this->feed->error = false;
+    if (Input::get('category') != 0) {
+    	$this->feed->category_id = Input::get('category');
+    }
+    $this->user->feeds()->save($this->feed);
+
+    return Redirect::back()->with('success', Lang::get('feed.success'));
 	}
 
 	/**
@@ -137,6 +132,16 @@ class FeedController extends \BaseController {
 	public function destroy($id)
 	{
 		//
+	}
+
+	private function initPie($url) {
+		$this->simplepie->enable_cache(false);
+		$this->simplepie->set_feed_url($url);
+		$this->simplepie->strip_htmltags($this->striped_tags);
+		$this->simplepie->handle_content_type();
+		$this->simplepie->force_feed();
+
+		return $this->simplepie->init();
 	}
 
 }

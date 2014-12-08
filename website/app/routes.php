@@ -51,3 +51,10 @@ Route::group(array('prefix' => 'auth'), function() {
     'uses' => 'AuthController@logout')
   );
 });
+
+
+Route::group(array('prefix' => 'feed'), function() {
+  Route::get('/', ['as' => 'feed.index', 'uses' => 'FeedController@index']);
+  Route::post('store', ['as' => 'feed.store', 'uses' => 'FeedController@store']);
+});
+
