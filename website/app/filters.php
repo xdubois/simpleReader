@@ -19,7 +19,7 @@ App::before(function($request)
 
 App::after(function($request, $response)
 {
-	//
+  //
 });
 
 /*
@@ -54,12 +54,12 @@ Route::filter('auth', function() {
   if ( ! Sentry::check()) {
 
   	if (Request::ajax()) {
-			return Response::make('Unauthorized', 401);
-		}
-		
-    Session::put('loginRedirect', Request::url());
-    return Redirect::route('signin');
-  }
+     return Response::make('Unauthorized', 401);
+   }
+   
+   Session::put('loginRedirect', Request::url());
+   return Redirect::route('signin');
+ }
 });
 
 
@@ -105,3 +105,14 @@ Route::filter('csrf', function() {
 });
 
 
+//View composer
+View::composer(['front.feeds.*', 'front.articles.*', 'front.home'], function($view) {
+  if (Sentry::check()) {
+    $user = Sentry::getUSer();
+    $navbar = $user->renderMenu();
+    $view->with('navbar', $navbar);
+  }
+  else {
+    $view->with('navbar', null); 
+  }
+});

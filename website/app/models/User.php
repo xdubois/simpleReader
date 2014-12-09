@@ -42,4 +42,49 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     return $this->hasMany('Category');
   }
 
+  public function renderMenu() {
+  
+    $counter = DB::table('users')
+    ->join('feeds', 'feeds.user_id', '=', 'users.id')
+    ->leftJoin('categories', 'categories.id', '=', 'feeds.category_id')
+    ->join('articles', 'articles.feed_id', '=', 'feeds.id')
+    ->select(DB::raw('count(articles.id) as total, COALESCE(categories.name, "subscriptions") AS name, categories.id'))
+    ->where('users.id', $this->id)
+    ->whereNull('articles.unread')
+    ->orWhere('articles.unread', FALSE)
+    ->groupBy('categories.name')
+    ->orderBy('categories.name', 'DESC')
+    ->lists('total', 'name'); 
+
+    $counter['total_unread'] = 0;
+    $counter['favorite'] = DB::table('users')
+    ->join('feeds', 'feeds.user_id', '=', 'users.id')
+    ->join('articles', 'articles.feed_id', '=', 'feeds.id')
+    ->select(DB::raw('count(articles.id) as total'))
+    ->where('articles.favorite', true)
+    ->first()->total; 
+    foreach ($counter as $unread) {
+      $counter['total_unread'] += $unread;
+    }
+
+    $counter['feeds'] = DB::table('users')
+    ->join('feeds', 'feeds.user_id', '=', 'users.id')
+    ->join('articles', 'articles.feed_id', '=', 'feeds.id')
+    ->select(DB::raw('count(articles.id) as total, feeds.id'))
+    ->groupBy('feeds.id')
+    ->orderBy('feeds.id', 'DESC')
+    ->lists('total', 'id');
+
+    $feeds = $this->feeds()->whereNull('category_id')->get();
+    $subscriptions['subscriptions'] = $feeds;
+    $categories = $this->categories()->get();
+    foreach ($categories as $category) {
+      $feeds = $category->feeds()->get();
+      if (!$feeds->isEmpty())
+        $subscriptions[$category->name] = $feeds;
+    }
+ 
+    return View::make('front.partial.nav', compact('subscriptions', 'counter'))->render();
+  }
+
 }
