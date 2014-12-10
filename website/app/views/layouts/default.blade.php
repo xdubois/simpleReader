@@ -29,7 +29,7 @@
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <!-- <li class="active"><a href="#">Home</a></li> -->
-          <li><a href="{{ route('simple') }}">feeds</a></li>
+          <li><a href="{{ route('feed.index') }}">feeds</a></li>
         @if (Sentry::check())
           <li><a href="{{ route('logout') }}">logout</a></li>
         @endif

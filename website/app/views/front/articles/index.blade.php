@@ -33,7 +33,7 @@
           Keep Unread
 
         <div class="span3">
-        <p class="text-right"><em>{{ $item->creator .' '. $item->pubDate->format('d-m-Y : h:s') }} </em></p>
+        <p class="text-right"><em>{{ $item->creator .' '. Carbon\Carbon::parse($item->pubDate)->format('d-m-Y : h:s')  }} </em></p>
         </div>
     </div>
 

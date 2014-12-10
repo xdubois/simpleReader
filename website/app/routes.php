@@ -13,7 +13,8 @@
 
 Route::get('/', ['as' => 'home', 'uses' => 'ArticleController@index']);
 
-Route::get('/simple', ['as' => 'simple', 'uses' => 'FeedController@index']);
+Route::get('/articles', 'ArticleController@show');
+Route::get('/articles/{id}/{filter?}/', ['as' => 'article.view', 'uses' => 'ArticleController@show']);
 
 Route::group(array('prefix' => 'auth'), function() {
   # Login
