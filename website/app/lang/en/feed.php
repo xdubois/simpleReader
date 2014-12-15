@@ -5,4 +5,5 @@ return [
   'url' => 'Url',
   'category' => 'Category',
   'validate' => 'Validate',
+  'success' => 'Succes',
 ];

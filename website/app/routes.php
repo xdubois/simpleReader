@@ -60,6 +60,11 @@ Route::group(array('prefix' => 'feed'), function() {
   Route::post('store', ['as' => 'feed.store', 'uses' => 'FeedController@store']);
 });
 
+Route::group(array('prefix' => 'user'), function() {
+  Route::get('/', ['as' => 'user.index', 'uses' => 'UserController@index']);
+  Route::post('/store', ['as' => 'user.store', 'uses' => 'UserController@store']);
+});
+
 //Ajax request
 Route::group(array('prefix' => 'ajax', 'before' => 'ajax.request'), function() {
  Route::post('update-category', ['as' => 'ajax.update.category', 'uses' => 'CategoryController@update']);

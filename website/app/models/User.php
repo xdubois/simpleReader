@@ -30,7 +30,8 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     'password_confirm'   => 'required|between:6,32|same:password',
   ];
 
-	public static $edit_rules = array(
+	public static $settings_rules = array(
+    'cache_max' => 'required|numeric'
   );
 
 
