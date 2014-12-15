@@ -18,7 +18,7 @@
   <div class="form-group">
     {{ Form::select('category', $categories, null, ['class' => 'form-control']) }}
   </div>
-  <button type="submit" class="btn btn-primary btn-sm"> @lang('auth.signin_button') </button>
+  <button type="submit" class="btn btn-primary btn-sm"> @lang('feed.validate') </button>
 
   {{ Form::close() }}
 

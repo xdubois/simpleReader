@@ -3,11 +3,6 @@
 return [
   'feed' => 'Feed',
   'url' => 'Url',
-  'category' => 'Category'
-
-
-
-
-
-
+  'category' => 'Category',
+  'validate' => 'Validate',
 ];
