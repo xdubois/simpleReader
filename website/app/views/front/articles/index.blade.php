@@ -47,11 +47,10 @@
       <hr />
   </div>
 </div>
+@endforeach
 <div class="row-fluid">
   <div id="margin-item">
     <p class="muted text-center">You have no more items.</p>
   </div>
 </div>
-@endforeach
-
 @stop
