@@ -114,7 +114,7 @@ Route::filter('csrf', function() {
 
 
 //View composer
-View::composer(['front.feeds.*', 'front.articles.*', 'front.home', 'front.user.*'], function($view) {
+View::composer(['front.feeds.*', 'front.articles.*', 'front.home', 'front.user.*', 'front.category.*'], function($view) {
   if (Sentry::check()) {
     $user = Sentry::getUSer();
     $navbar = $user->renderMenu();

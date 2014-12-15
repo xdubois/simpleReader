@@ -32,7 +32,7 @@
 </div>
 
 <div class="span12">
-  <h2>@lang('user.category')</h2>
+  <h2>@lang('category.category')</h2>
   <table class="table hover">
     <thead>
       <th>Name</th>
@@ -40,9 +40,9 @@
     </thead>
     @foreach ($categories as $category)  
     <tr>
-      <td>{{ Form::text('name', $category->name, ['class' => 'form-control'])}} </td>
+      <td>{{ $category->name }} </td>
       <td>
-       <a href="{{ route('feed.destroy', $category->id) }}">update</a>
+       <a href="{{ route('category.edit', $category->id) }}">update</a>
        <a href="{{ route('category.destroy', $category->id) }}">delete</a>
       </td>
     </tr>
@@ -51,7 +51,7 @@
 </div>
 
 <div class="span12">
-  <h2>@lang('user.categoryAdd')</h2>
+  <h2>@lang('category.create')</h2>
   {{ Form::open(array('route' => 'category.store')) }}
   <div class="form-group {{ $errors->has('name') ? 'has-error' : ''}}">
     {{ Form::label('name', Lang::get('category.name') ) }}

@@ -2,6 +2,12 @@
 
 class CategoryController extends AuthorizedController {
 
+	private $category;
+
+	public function __construct(Category $category) {
+		$this->category = $category;
+		parent::__construct();
+	}
 	/**
 	 * Update the specified resource in storage.
 	 * PUT /category/{id}
@@ -9,13 +15,31 @@ class CategoryController extends AuthorizedController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update() {
+	public function updateFeedCategory() {
 		
 		$feed = Feed::findOrFail(Input::get('feed_id'));
 		$feed->category_id = Input::get('category_id') == 0 ? null : Input::get('category_id');
 		$feed->save();
 
 		return $this->user->renderMenu();
+	}
+
+	public function edit($id) {
+		$category = $this->category->findOrFail($id);
+
+		return View::make('front.category.edit', compact('category'));
+	}
+
+	public function update($id) {
+		$validator = Validator::make(Input::all(), Category::$rules);
+    if ($validator->fails()) {
+      return Redirect::back()->withInput()
+      											 ->withErrors($validator);
+    }
+		$this->category = $this->category->findOrFail($id);
+		$this->category->update(['name' => Input::get('name')]);
+
+    return Redirect::route('user.index')->with('success', Lang::get('category.success'));
 	}
 
 	public function store() {
@@ -29,18 +53,6 @@ class CategoryController extends AuthorizedController {
 				 ->create(['name' => Input::get('name')]);
 
     return Redirect::back()->with('success', Lang::get('user.success'));
-	}
-
-	public function updateCategoryName() {
-		$id = Input::get('id');
-		$category = Category::findOrFail($id);
-
-		if (Input::get('name') == '') {
-			return Respone::make('error', 201);
-		}
-
-		$category->name = Input::get('name');
-		$category->save();
 	}
 
 	public function destroy($id) {

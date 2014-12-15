@@ -67,12 +67,14 @@ Route::group(array('prefix' => 'user'), function() {
 
 Route::group(array('prefix' => 'category'), function() {
   Route::get('destroy/{id}', ['as' => 'category.destroy', 'uses' => 'CategoryController@destroy']);
+  Route::get('edit/{id}', ['as' => 'category.edit', 'uses' => 'CategoryController@edit']);
   Route::post('store', ['as' => 'category.store', 'uses' => 'CategoryController@store']);
+  Route::post('store/{id}', ['as' => 'category.update', 'uses' => 'CategoryController@update']);
 });
 
 //Ajax request
 Route::group(array('prefix' => 'ajax', 'before' => 'ajax.request'), function() {
- Route::post('update-category', ['as' => 'ajax.update.category', 'uses' => 'CategoryController@update']);
+ Route::post('update-category', ['as' => 'ajax.update.category', 'uses' => 'CategoryController@updateFeedCategory']);
  Route::post('toggle-read', ['as' => 'ajax.toggle.read', 'uses' => 'ArticleController@toggleRead']);
  Route::post('toggle-favorite', ['as' => 'ajax.toggle.favorite', 'uses' => 'ArticleController@toggleFavorite']);
  Route::post('set-read', ['as' => 'ajax.article.read', 'uses' => 'ArticleController@setRead']);
