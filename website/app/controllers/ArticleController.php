@@ -106,7 +106,9 @@ class ArticleController extends AuthorizedController {
 	public function setRead() {
 		$id = Input::get('id');
 		$article = Article::findOrFail($id);
-		$article->unread = FALSE;
+		if ($article->unread === NULL) {
+			$article->unread = FALSE;
+		}
 		$article->save();
 
 		return $this->user->renderMenu();
