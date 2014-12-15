@@ -31,6 +31,7 @@
         <!-- <li class="active"><a href="#">Home</a></li> -->
           <li><a href="{{ route('feed.index') }}">feeds</a></li>
         @if (Sentry::check())
+          <li><a href="{{ route('user.index') }}">settings</a></li>
           <li><a href="{{ route('logout') }}">logout</a></li>
         @endif
       </ul>
@@ -49,7 +50,10 @@
   @endif
   </div>
   </div>
-  <div class="col-md-10">@yield('content')</div>
+  <div class="col-md-10">
+  @include('layouts.notifications')
+  @yield('content')
+  </div>
 </div>
 </div>
 
