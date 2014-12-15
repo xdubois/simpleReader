@@ -44,33 +44,35 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 
   public function renderMenu() {
   
-    $counter = DB::table('users')
-    ->join('feeds', 'feeds.user_id', '=', 'users.id')
+    $counter = $this->feeds()
     ->leftJoin('categories', 'categories.id', '=', 'feeds.category_id')
     ->join('articles', 'articles.feed_id', '=', 'feeds.id')
     ->select(DB::raw('count(articles.id) as total, COALESCE(categories.name, "subscriptions") AS name, categories.id'))
-    ->where('users.id', $this->id)
     ->whereNull('articles.unread')
-    ->orWhere('articles.unread', FALSE)
+    ->where('articles.favorite', FALSE)
+    ->orWhere('articles.unread', TRUE)
     ->groupBy('categories.name')
     ->orderBy('categories.name', 'DESC')
-    ->lists('total', 'name'); 
+    ->lists('total', 'name');
 
     $counter['total_unread'] = 0;
-    $counter['favorite'] = DB::table('users')
-    ->join('feeds', 'feeds.user_id', '=', 'users.id')
+    foreach ($counter as $count['feeds']) {
+      $counter['total_unread'] += $count['feeds'];
+    }
+
+    $counter['favorite'] = $this->feeds()
     ->join('articles', 'articles.feed_id', '=', 'feeds.id')
     ->select(DB::raw('count(articles.id) as total'))
     ->where('articles.favorite', true)
     ->first()->total; 
-    foreach ($counter as $unread) {
-      $counter['total_unread'] += $unread;
-    }
+   
 
-    $counter['feeds'] = DB::table('users')
-    ->join('feeds', 'feeds.user_id', '=', 'users.id')
+    $counter['feeds'] = $this->feeds()
     ->join('articles', 'articles.feed_id', '=', 'feeds.id')
     ->select(DB::raw('count(articles.id) as total, feeds.id'))
+    ->where('articles.favorite', FALSE)
+    ->whereNull('articles.unread')
+    ->orWhere('articles.unread', TRUE)
     ->groupBy('feeds.id')
     ->orderBy('feeds.id', 'DESC')
     ->lists('total', 'id');
@@ -83,7 +85,6 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
       if (!$feeds->isEmpty())
         $subscriptions[$category->name] = $feeds;
     }
- 
     return View::make('front.partial.nav', compact('subscriptions', 'counter'))->render();
   }
 
