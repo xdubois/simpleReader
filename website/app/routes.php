@@ -65,4 +65,5 @@ Route::group(array('prefix' => 'ajax', 'before' => 'ajax.request'), function() {
  Route::post('update-category', ['as' => 'ajax.update.category', 'uses' => 'CategoryController@update']);
  Route::post('toggle-read', ['as' => 'ajax.toggle.read', 'uses' => 'ArticleController@toggleRead']);
  Route::post('toggle-favorite', ['as' => 'ajax.toggle.favorite', 'uses' => 'ArticleController@toggleFavorite']);
+ Route::post('set-read', ['as' => 'ajax.article.read', 'uses' => 'ArticleController@setRead']);
 });

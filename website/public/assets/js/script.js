@@ -39,4 +39,23 @@ $(function() {
     });
   });
 
+  var margin = $(window).height() * 0.8;
+  $("#margin-item").css("height", margin);
+  $("#margin-item > p").css("padding-top", margin/2);
+
+  $('.article').waypoint(function (direction) {
+    if (direction == "down") {
+      var title = $(this).find("h2").find("a");
+      var posting = $.post($('#ajax-url').data('set-read'), { id: $(this).attr("id") });
+      posting.done(function (data) {
+         $("#user-navbar").html(data);
+          if (data != "") {
+            title.css("color", "black");
+          }
+      });
+
+
+    }
+  });
+
 });

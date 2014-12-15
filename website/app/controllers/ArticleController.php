@@ -31,7 +31,10 @@ class ArticleController extends AuthorizedController {
 	public function show($id = '', $filter = null) {
 
 		if (is_numeric($id)) {
-			$items = Feed::findOrFail($id)->articles()->get();
+			$items = Feed::findOrFail($id)->articles()
+																		->whereNull('articles.unread')
+																		->orWhere('articles.unread', TRUE)
+																		->get();
 		}
 		else {
 			switch ($id) {
@@ -42,7 +45,7 @@ class ArticleController extends AuthorizedController {
 					->select('articles.*')
 					->whereNull('feeds.category_id')
 					->whereNull('articles.unread')
-					->orWhere('articles.unread', FALSE)
+					->orWhere('articles.unread', TRUE)
 					->get(); 
 				break;
 				case 'stared': //Only favorite items
@@ -50,7 +53,7 @@ class ArticleController extends AuthorizedController {
 					->join('feeds', 'feeds.user_id', '=', 'users.id')
 					->join('articles', 'articles.feed_id', '=', 'feeds.id')
 					->select('articles.*')
-					->where('articles.favorite', true)
+					->where('articles.favorite', TRUE)
 					->get(); 
 				break;
 				case 'all': //All items
@@ -59,7 +62,7 @@ class ArticleController extends AuthorizedController {
 					->join('articles', 'articles.feed_id', '=', 'feeds.id')
 					->select('articles.*')
 					->whereNull('articles.unread')
-					->orWhere('articles.unread', FALSE)
+					->orWhere('articles.unread', TRUE)
 					->get(); 
 				break;
 				default: // load all feeds from a folder
@@ -70,7 +73,7 @@ class ArticleController extends AuthorizedController {
 					->select('articles.*')
 					->where('categories.name', $id)
 					->whereNull('articles.unread')
-					->orWhere('articles.unread', FALSE)
+					->orWhere('articles.unread', TRUE)
 					->get(); 
 				break;
 			}
@@ -95,6 +98,15 @@ class ArticleController extends AuthorizedController {
 		$id = Input::get('id');
 		$article = Article::findOrFail($id);
 		$article->favorite = !$article->favorite;
+		$article->save();
+
+		return $this->user->renderMenu();
+	}
+
+	public function setRead() {
+		$id = Input::get('id');
+		$article = Article::findOrFail($id);
+		$article->unread = FALSE;
 		$article->save();
 
 		return $this->user->renderMenu();

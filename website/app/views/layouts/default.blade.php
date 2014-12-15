@@ -44,7 +44,7 @@
   <div data-spy="affix">
   @if(Sentry::check())
     <div id="user-navbar">
-    {{ $navbar }}
+      {{ $navbar }}
     </div>
   @endif
   </div>
@@ -57,6 +57,7 @@
 
 
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+{{ HTML::script('assets/js/waypoints.min.js') }}
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 {{ HTML::script('assets/js/script.js') }}
 @yield('js')
