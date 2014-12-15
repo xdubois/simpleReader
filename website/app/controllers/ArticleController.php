@@ -50,8 +50,7 @@ class ArticleController extends AuthorizedController {
 					->join('feeds', 'feeds.user_id', '=', 'users.id')
 					->join('articles', 'articles.feed_id', '=', 'feeds.id')
 					->select('articles.*')
-					->whereNull('feeds.category_id')
-					->whereNull('articles.unread')
+					->where('articles.favorite', true)
 					->get(); 
 				break;
 				case 'all': //All items
@@ -81,6 +80,24 @@ class ArticleController extends AuthorizedController {
 
 		return View::make('front.articles.index', compact('items'));
 
+	}
+
+	public function toggleRead() {
+		$id = Input::get('id');
+		$article = Article::findOrFail($id);
+		$article->unread = Input::get('unread');
+		$article->save();
+
+		return $this->user->renderMenu();
+	}
+
+	public function toggleFavorite() {
+		$id = Input::get('id');
+		$article = Article::findOrFail($id);
+		$article->favorite = !$article->favorite;
+		$article->save();
+
+		return $this->user->renderMenu();
 	}
 
 

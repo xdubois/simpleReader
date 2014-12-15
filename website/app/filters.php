@@ -68,6 +68,14 @@ Route::filter('auth.basic', function()
 	return Auth::basic();
 });
 
+Route::filter('ajax.request', function() {
+  if (!Request::ajax()) {
+   return Response::make('Unauthorized', 401);
+ }
+
+});
+
+
 /*
 |--------------------------------------------------------------------------
 | Guest Filter

@@ -43,7 +43,9 @@
   <div class="col-md-2"> 
   <div data-spy="affix">
   @if(Sentry::check())
+    <div id="user-navbar">
     {{ $navbar }}
+    </div>
   @endif
   </div>
   </div>
