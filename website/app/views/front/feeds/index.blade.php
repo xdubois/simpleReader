@@ -24,7 +24,6 @@
 
 </div>
 
-
 <div class="span12">
   <h2>Feeds</h2>
   <div id="ajax"></div>

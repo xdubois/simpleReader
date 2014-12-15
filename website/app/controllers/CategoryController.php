@@ -18,5 +18,37 @@ class CategoryController extends AuthorizedController {
 		return $this->user->renderMenu();
 	}
 
+	public function store() {
+		$validator = Validator::make(Input::all(), Category::$rules);
+    if ($validator->fails()) {
+      return Redirect::route('user.index')->withInput()
+      											 ->withErrors($validator);
+    }
+		$this->user
+				 ->categories()
+				 ->create(['name' => Input::get('name')]);
+
+    return Redirect::back()->with('success', Lang::get('user.success'));
+	}
+
+	public function updateCategoryName() {
+		$id = Input::get('id');
+		$category = Category::findOrFail($id);
+
+		if (Input::get('name') == '') {
+			return Respone::make('error', 201);
+		}
+
+		$category->name = Input::get('name');
+		$category->save();
+	}
+
+	public function destroy($id) {
+		$this->user->feeds()->where('category_id', $id)->update(['category_id' => NULL]);
+		Category::destroy($id);
+
+		return Redirect::back()->with('succes', Lang::get('user.succes'));
+	}
+
 
 }

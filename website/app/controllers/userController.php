@@ -9,8 +9,11 @@ class UserController extends AuthorizedController {
 	 * @return Response
 	 */
 	public function index() {
-		$user= $this->user;
-		return View::make('front.user.index', compact('user'));
+		$user = $this->user;
+		$categories =  $this->user
+												->categories()
+												->get();
+		return View::make('front.user.index', compact('user', 'categories'));
 	}
 
 	public function store() {
