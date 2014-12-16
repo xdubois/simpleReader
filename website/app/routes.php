@@ -11,6 +11,13 @@
 |
 */
 
+Route::get('/test', function() {
+$conf = Config::get('simplereader.striped_tags');
+  var_dump($conf);
+
+});
+
+
 Route::get('/', ['as' => 'home', 'uses' => 'ArticleController@index']);
 
 Route::get('/articles', 'ArticleController@show');

@@ -4,26 +4,10 @@ class FeedController extends AuthorizedController {
 
 	private $simplepie;
 	private $feed;
-	private $striped_tags = ['base',
-		'blink',
-		'body',
-		'doctype',
-		'font',
-		'form',
-		'frame',
-		'frameset',
-		'html',
-		'input',
-		'marquee',
-		'meta',
-		'noscript',
-		'script',
-		'style',
-	];
 
-	public function __construct() {
+	public function __construct(Feed $feed) {
 		$this->simplepie = new SimplePie();
-		$this->feed =  new Feed();
+		$this->feed = $feed;
 		parent::__construct();
 	}
 
@@ -39,17 +23,6 @@ class FeedController extends AuthorizedController {
 		$categories = ['none'] + $this->user->categories->lists('name', 'id');
 
 		return View::make('front.feeds.index', compact('feeds', 'categories'));
-	}
-
-	/**
-	 * Show the form for creating a new resource.
-	 * GET /feed.php/create
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
 	}
 
 	/**
@@ -89,29 +62,6 @@ class FeedController extends AuthorizedController {
     return Redirect::back()->with('success', Lang::get('feed.success'));
 	}
 
-	/**
-	 * Display the specified resource.
-	 * GET /feed.php/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		//
-	}
-
-	/**
-	 * Show the form for editing the specified resource.
-	 * GET /feed.php/{id}/edit
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function edit($id)
-	{
-		//
-	}
 
 	/**
 	 * Update the specified resource in storage.
@@ -140,7 +90,7 @@ class FeedController extends AuthorizedController {
 	private function initPie($url) {
 		$this->simplepie->enable_cache(false);
 		$this->simplepie->set_feed_url($url);
-		$this->simplepie->strip_htmltags($this->striped_tags);
+		$this->simplepie->strip_htmltags(Config::get('simplereader.striped_tags'));
 		$this->simplepie->handle_content_type();
 		$this->simplepie->force_feed();
 
