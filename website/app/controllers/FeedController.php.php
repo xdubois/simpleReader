@@ -70,9 +70,56 @@ class FeedController extends AuthorizedController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
-	{
-		//
+	public function update($id = null) {
+		if ($id === NULL) {
+			$feeds = $this->user->feeds()->get();
+			foreach ($feeds as $feed) {
+				$this->feed = $feed;
+				$this->getLastArticles();
+				$this->flushFeedCache();
+			}
+		}
+		else {
+			$this->feed = $this->user->feeds()->findOrFail($id);
+			$this->getLastArticles();
+			$this->flushFeedCache();
+		}
+	}
+
+	private function getLastArticles() {
+		$this->initPie($this->feed->url);
+		$items = array_reverse($this->simplepie->get_items(0, $this->user->articleCacheMax));
+		$newArticles = 0;
+		foreach ($items as $item) {
+			$exist = $this->feed->articles()
+					 ->where('guid', $item->get_id())
+					 ->count();
+			if ($exist) {
+				continue;
+			}
+			$this->saveArticle($item);
+			$newArticles++;
+		}
+		$this->feed->lastUpdate = Carbon\Carbon::now();
+		$this->feed->save();
+		$this->user->aricleDownloaded += $newArticles;
+		$this->user->save();
+
+	}
+
+	private function flushFeedCache() {
+		$currentCount = $this->feed->join('articles', 'articles.feed_id', '=', 'feeds.id')
+																->where('favorite', FALSE)
+																->whereNull('unread')
+																->OrWhere('unread', TRUE)
+																->orderBy('articles.id')
+																->count();
+
+		$diff = $currentCount - $this->user->articleCacheMax;		
+		if ($diff > 0 ) {
+				$bindParam = ['diff' => $diff, 'id' => $this->feed->id];
+				$res = DB::select(DB::raw('DELETE FROM articles WHERE favorite = 0  AND (unread IS NULL OR unread = 1) AND feed_id = :id ORDER BY id, pubDate LIMIT :diff'), $bindParam);
+		}
 	}
 
 	/**
@@ -98,18 +145,22 @@ class FeedController extends AuthorizedController {
 	}
 
 	private function getArticles() {
-		$items = $this->simplepie->get_items(0, $this->user->articleCacheMax);
+		$items = array_reverse($this->simplepie->get_items(0, $this->user->articleCacheMax));
 		foreach ($items as $item) {
+			$this->saveArticle($item);
+		}
+
+	}
+
+	private function saveArticle($item) {
 			$article = new Article();
-			$article->guid = md5($item->get_link());
+			$article->guid = $item->get_id();
 			$article->title = $item->get_title();
 			$article->creator = ($item->get_author() === NULL ?: $item->get_author()->name);
 			$article->link = $item->get_link();
 			$article->content = $item->get_content();
 			$article->pubDate = $item->get_gmdate('Y-m-d H:i:s');
 			$this->feed->articles()->save($article);
-		}
-
 	}
 
 }

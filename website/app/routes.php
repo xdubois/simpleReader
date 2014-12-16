@@ -64,7 +64,9 @@ Route::group(array('prefix' => 'auth'), function() {
 Route::group(array('prefix' => 'feed'), function() {
   Route::get('/', ['as' => 'feed.index', 'uses' => 'FeedController@index']);
   Route::get('/destroy/{id}', ['as' => 'feed.destroy', 'uses' => 'FeedController@destroy']);
+  Route::get('/update/{id?}', ['as' => 'feed.update', 'uses' => 'FeedController@update']);
   Route::post('store', ['as' => 'feed.store', 'uses' => 'FeedController@store']);
+
 });
 
 Route::group(array('prefix' => 'user'), function() {
