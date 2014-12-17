@@ -55,4 +55,13 @@ $(function() {
     }
   });
 
+  $('.mark-all-read').click(function(){
+    $.ajax({
+      type: "POST",
+      url: $('#ajax-url').data('set-all-read')
+    }).done(function(data) {
+      $("#user-navbar").html(data);
+    });
+  })
+
 });

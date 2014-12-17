@@ -8,10 +8,17 @@
 
 @section('content')
 
-<div id="ajax-url" data-favorite="{{ route('ajax.toggle.favorite') }}" data-read="{{ route('ajax.toggle.read') }}"  data-set-read="{{ route('ajax.article.read') }}" >
+@if (!$items->isEmpty())
+<div id="ajax-url" data-favorite="{{ route('ajax.toggle.favorite') }}" data-read="{{ route('ajax.toggle.read') }}"  data-set-read="{{ route('ajax.article.read', $items->first()->id) }}" data-set-all-read="{{ route('ajax.set.articles.read', $id) }}">
 </div>
+@endif
 <div class="span12">
-  <h2>Title</h2>
+@if (is_numeric($id))
+<button type="button" class="btn btn-default btn-sm mark-all-read">
+    <span class="glyphicon glyphicon-check" aria-hidden="true"></span> Mark all as readed
+  </button>
+@endif
+
 @foreach ($items as $item)  
 <div class="article" id="{{ $item->id }}">    
   <div class="row-fluid">

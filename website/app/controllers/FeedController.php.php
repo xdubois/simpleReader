@@ -163,6 +163,11 @@ class FeedController extends AuthorizedController {
 			$this->feed->articles()->save($article);
 	}
 
-
+	public function setAllArticleRead($id) {
+		if (is_numeric($id)) {
+			Article::where('feed_id', $id)->update(['unread' => FALSE]);
+		}
+		return $this->user->renderMenu();
+	}
 
 }

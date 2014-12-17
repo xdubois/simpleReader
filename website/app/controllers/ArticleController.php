@@ -33,7 +33,7 @@ class ArticleController extends AuthorizedController {
 			$items = Feed::findOrFail($id)->articles()
 																		->whereNull('articles.unread')
 																		->orWhere('articles.unread', TRUE)
-																		->get();
+																		->get();												
 		}
 		else {
 			switch ($id) {
@@ -42,7 +42,6 @@ class ArticleController extends AuthorizedController {
 				break;
 				case 'stared': //Only favorite items
 				$items = $this->user->getFavoriteArticles();
-
 				break;
 				case 'all': //All items
 				$items = $this->user->getAllArticles();
@@ -55,7 +54,7 @@ class ArticleController extends AuthorizedController {
 		}
 
 
-		return View::make('front.articles.index', compact('items'));
+		return View::make('front.articles.index', compact('items', 'id'));
 
 	}
 

@@ -13,7 +13,7 @@
 
 Route::get('/test', function() {
 $conf = Config::get('simplereader.striped_tags');
-  var_dump($conf);
+  var_dump(Request::segment(1));
 
 });
 
@@ -88,4 +88,5 @@ Route::group(array('prefix' => 'ajax', 'before' => 'ajax.request'), function() {
  Route::post('toggle-favorite', ['as' => 'ajax.toggle.favorite', 'uses' => 'ArticleController@toggleFavorite']);
  Route::post('set-read', ['as' => 'ajax.article.read', 'uses' => 'ArticleController@setRead']);
  Route::post('update-category-name', ['as' => 'ajax.update.category.name', 'uses' => 'ArticleController@updateCategoryName']);
+ Route::post('set-articles-read/{id}', ['as' => 'ajax.set.articles.read', 'uses' => 'FeedController@setAllArticleRead']);
 });
