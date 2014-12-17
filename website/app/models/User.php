@@ -25,26 +25,65 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
 	protected $hidden = array('password', 'remember_token');
 
 	public static $signup_rules = [
-    'email'      => 'required|email|unique:users',
-    'password'   => 'required|between:6,32',
-    'password_confirm'   => 'required|between:6,32|same:password',
+  'email'      => 'required|email|unique:users',
+  'password'   => 'required|between:6,32',
+  'password_confirm'   => 'required|between:6,32|same:password',
   ];
 
-	public static $settings_rules = array(
+  public static $settings_rules = array(
     'cache_max' => 'required|numeric'
-  );
+    );
 
 
-	public function feeds() {
-		return $this->hasMany('Feed');
-	}
+  public function feeds() {
+    return $this->hasMany('Feed');
+  }
 
   public function categories() {
     return $this->hasMany('Category');
   }
 
+  public function getArticlesWithNoCategory() {
+    return $this->join('feeds', 'feeds.user_id', '=', 'users.id')
+    ->join('articles', 'articles.feed_id', '=', 'feeds.id')
+    ->select('articles.*')
+    ->whereNull('feeds.category_id')
+    ->whereNull('articles.unread')
+    ->orWhere('articles.unread', TRUE)
+    ->get(); 
+
+  }
+
+  public function getFavoriteArticles() {
+    return  $this->join('feeds', 'feeds.user_id', '=', 'users.id')
+    ->join('articles', 'articles.feed_id', '=', 'feeds.id')
+    ->select('articles.*')
+    ->where('articles.favorite', TRUE)
+    ->get(); 
+  }
+
+  public function getAllArticles() {
+    return $this->join('feeds', 'feeds.user_id', '=', 'users.id')
+    ->join('articles', 'articles.feed_id', '=', 'feeds.id')
+    ->select('articles.*')
+    ->whereNull('articles.unread')
+    ->orWhere('articles.unread', TRUE)
+    ->get(); 
+  }
+
+  public function getArticlesFromCategory($id) {
+    return $this->join('feeds', 'feeds.user_id', '=', 'users.id')
+    ->join('categories', 'categories.id', '=', 'feeds.category_id')
+    ->join('articles', 'articles.feed_id', '=', 'feeds.id')
+    ->select('articles.*')
+    ->where('categories.name', $id)
+    ->whereNull('articles.unread')
+    ->orWhere('articles.unread', TRUE)
+    ->get(); 
+  }
+
   public function renderMenu() {
-  
+
     $counter = $this->feeds()
     ->leftJoin('categories', 'categories.id', '=', 'feeds.category_id')
     ->join('articles', 'articles.feed_id', '=', 'feeds.id')
@@ -66,7 +105,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     ->select(DB::raw('count(articles.id) as total'))
     ->where('articles.favorite', true)
     ->first()->total; 
-   
+
 
     $counter['feeds'] = $this->feeds()
     ->join('articles', 'articles.feed_id', '=', 'feeds.id')

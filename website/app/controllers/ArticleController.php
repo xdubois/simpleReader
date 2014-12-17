@@ -29,7 +29,6 @@ class ArticleController extends AuthorizedController {
 	 * @return Response
 	 */
 	public function show($id = '', $filter = null) {
-
 		if (is_numeric($id)) {
 			$items = Feed::findOrFail($id)->articles()
 																		->whereNull('articles.unread')
@@ -39,42 +38,17 @@ class ArticleController extends AuthorizedController {
 		else {
 			switch ($id) {
 				case 'subscriptions': // subscriptions wit no category
-				$items = $this->user
-					->join('feeds', 'feeds.user_id', '=', 'users.id')
-					->join('articles', 'articles.feed_id', '=', 'feeds.id')
-					->select('articles.*')
-					->whereNull('feeds.category_id')
-					->whereNull('articles.unread')
-					->orWhere('articles.unread', TRUE)
-					->get(); 
+				$items = $this->user->getArticlesWithNoCategory();
 				break;
 				case 'stared': //Only favorite items
-				$items = $this->user
-					->join('feeds', 'feeds.user_id', '=', 'users.id')
-					->join('articles', 'articles.feed_id', '=', 'feeds.id')
-					->select('articles.*')
-					->where('articles.favorite', TRUE)
-					->get(); 
+				$items = $this->user->getFavoriteArticles();
+
 				break;
 				case 'all': //All items
-				$items = $this->user
-					->join('feeds', 'feeds.user_id', '=', 'users.id')
-					->join('articles', 'articles.feed_id', '=', 'feeds.id')
-					->select('articles.*')
-					->whereNull('articles.unread')
-					->orWhere('articles.unread', TRUE)
-					->get(); 
+				$items = $this->user->getAllArticles();
 				break;
 				default: // load all feeds from a folder
-				$items = $this->user
-					->join('feeds', 'feeds.user_id', '=', 'users.id')
-					->join('categories', 'categories.id', '=', 'feeds.category_id')
-					->join('articles', 'articles.feed_id', '=', 'feeds.id')
-					->select('articles.*')
-					->where('categories.name', $id)
-					->whereNull('articles.unread')
-					->orWhere('articles.unread', TRUE)
-					->get(); 
+				$items = $this->user->getArticlesFromCategory($id);
 				break;
 			}
 
