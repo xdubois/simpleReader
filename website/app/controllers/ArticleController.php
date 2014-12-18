@@ -10,15 +10,9 @@ class ArticleController extends AuthorizedController {
 	 */
 	public function index() {
 
-		$feeds = $this->user->feeds()->get();
-		$items = [];
-		foreach ($feeds as $feed) {
-			foreach ($feed->articles()->get() as $item) {
-				$items[] = $item;
-			}
-		}
-
-		return View::make('front.articles.index', compact('items'));
+		$items = $this->user->getAllArticles();
+		$id = 'all';
+		return View::make('front.articles.index', compact('items', 'id'));
 	}
 
 	/**
