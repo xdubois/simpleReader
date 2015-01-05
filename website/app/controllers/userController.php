@@ -29,5 +29,10 @@ class UserController extends AuthorizedController {
     return Redirect::back()->with('success', Lang::get('user.success'));
 	}
 
+  public function updateClickCounter() {
+    $this->user->articleClicked++;
+    $this->user->save();
+  }
+
 
 }

@@ -9,7 +9,7 @@
 @section('content')
 
 @if (!$items->isEmpty())
-<div id="ajax-url" data-favorite="{{ route('ajax.toggle.favorite') }}" data-read="{{ route('ajax.toggle.read') }}"  data-set-read="{{ route('ajax.article.read', $items->first()->id) }}" data-set-all-read="{{ route('ajax.set.articles.read', $id) }}">
+<div id="ajax-url" data-favorite="{{ route('ajax.toggle.favorite') }}" data-read="{{ route('ajax.toggle.read') }}"  data-set-read="{{ route('ajax.article.read', $items->first()->id) }}" data-set-all-read="{{ route('ajax.set.articles.read', $id) }}" data-item-click="{{ route('ajax.item.click')}}">
 </div>
 @endif
 <div class="span12">

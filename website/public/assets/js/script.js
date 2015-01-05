@@ -2,8 +2,8 @@ $(function() {
 
   $.ajaxSetup({
     headers: {
-        'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
-      }
+      'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+    }
   });
 
   $('.category-update').change(function(){
@@ -45,15 +45,20 @@ $(function() {
       var title = $(this).find("h2").find("a");
       var posting = $.post($('#ajax-url').data('set-read'), { id: $(this).attr("id") });
       posting.done(function (data) {
-         $("#user-navbar").html(data);
-          if (data != "") {
-            title.css("color", "black");
-          }
-      });
+       $("#user-navbar").html(data);
+       if (data != "") {
+        title.css("color", "black");
+      }
+    });
 
 
     }
   });
+
+  $(".item-click").click(function () {
+    $.post($('#ajax-url').data('item-click'));
+  });
+
 
   $('.mark-all-read').click(function(){
     $.ajax({
