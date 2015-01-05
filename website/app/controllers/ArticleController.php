@@ -75,6 +75,8 @@ class ArticleController extends AuthorizedController {
 		$article = Article::findOrFail($id);
 		if ($article->unread === NULL) {
 			$article->unread = FALSE;
+			$this->user->articleReaded++;
+			$this->user->save();
 		}
 		$article->save();
 
