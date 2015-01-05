@@ -64,7 +64,7 @@ class FeedController extends AuthorizedController {
 
 
 	/**
-	 * update user's feeds
+	 * update user's feed
 	 * @param  [type] $id [description]
 	 * @return [type]     [description]
 	 */
@@ -167,6 +167,19 @@ class FeedController extends AuthorizedController {
 		if (is_numeric($id)) {
 			Article::where('feed_id', $id)->update(['unread' => FALSE]);
 		}
+		return $this->user->renderMenu();
+	}
+
+	public function updateFeedName() {
+		$name = Input::get('name');
+		$id = Input::get('feed_id');
+
+		if ($name != "") {
+			$this->feed = $this->feed->findOrFail($id);
+			$this->feed->name = e($name);
+			$this->feed->save();
+		}
+
 		return $this->user->renderMenu();
 	}
 

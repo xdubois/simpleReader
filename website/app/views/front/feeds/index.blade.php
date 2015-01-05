@@ -38,8 +38,8 @@
       <th></th>
     </thead>
     @foreach ($feeds as $feed)  
-    <tr data-update-category-url="{{ route('ajax.update.category') }}" data-feed-id="{{ $feed->id }}">
-      <td>{{ $feed->name }}</td>
+    <tr data-update-category-url="{{ route('ajax.update.category') }}" data-update-feed-name="{{ route('ajax.update.feed.name') }}" data-feed-id="{{ $feed->id }}">
+      <td>{{ Form::text('name', $feed->name, ['class' => 'form-control feed-name-update']) }}</td>
       <td>{{ Str::limit($feed->description, 30) }}</td>
       <td>{{ $feed->website }}</td>
       <td>{{ $feed->url }}</td>

@@ -17,6 +17,17 @@ $(function() {
     });
   })
 
+  $('.feed-name-update').bind('input', function() {
+    var attributs = $(this).parent().parent();
+    $.ajax({
+      type: "POST",
+      url: attributs.data('update-feed-name'),
+      data: { name: $(this).val(), feed_id: attributs.data('feed-id') }
+    }).done(function(data) {
+      $("#user-navbar").html(data);
+    });
+  });
+
   $("span.togglefavorite").click(function () {
     $(this).toggleClass("glyphicon-star-empty glyphicon-star");
     var posting = $.post($('#ajax-url').data('favorite'), { id: $(this).closest('.article').attr('id') });
