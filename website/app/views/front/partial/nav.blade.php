@@ -1,4 +1,5 @@
-<hr />
+
+<ul class="nav nav-list"></ul>
 <ul class="nav nav-list">
   <li><a href="{{ route('article.view', 'all') }}"><i class="glyphicon glyphicon-fire"></i>
     <strong> All items ({{ $counter['total_unread'] }})</strong>
@@ -8,11 +9,11 @@
  <a href="{{ route('article.view', 'stared') }}"><i class="glyphicon glyphicon-star"></i> Starred items ({{ $counter['favorite'] }})</a>
 </li>
 </ul>
-<hr />
+
 <ul class="nav nav-list">  
   @foreach ($subscriptions as $folder => $feeds)
-  <li class="nav-header">
-  <a href="{{ route('article.view', $folder) }}">FOLDER 
+ <li class="nav-header">
+  <a href="{{ route('article.view', $folder) }}"> <span class="glyphicon glyphicon-folder-close"> </span>
      {{ $folder}} 
       @if(isset($counter[$folder]))
         ({{ $counter[$folder] }})
@@ -32,4 +33,3 @@
  @endforeach
  @endforeach
 </ul>
-<hr />

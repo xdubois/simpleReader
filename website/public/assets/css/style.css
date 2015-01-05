@@ -13,6 +13,10 @@ body {
   padding: 9px 0;
 }
 
+.nav-list {
+  padding: 9px 0;
+}
+
 @media (max-width: 980px) {
   /* Enable use of floated navbar text */
   .navbar-text.pull-right {
@@ -21,3 +25,9 @@ body {
     padding-right: 5px;
   }
 }
+
+#user-navbar.affix {
+    position: fixed;
+    top: 50px;
+    width:200px;
+  }

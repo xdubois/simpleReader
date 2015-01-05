@@ -42,13 +42,11 @@
 
 <div class="row-fluid">
   <div class="col-md-2"> 
-  <div data-spy="affix">
   @if(Sentry::check())
-    <div id="user-navbar">
+    <div data-spy="affix" id="user-navbar">
       {{ $navbar }}
     </div>
   @endif
-  </div>
   </div>
   <div class="col-md-10">
   @include('layouts.notifications')

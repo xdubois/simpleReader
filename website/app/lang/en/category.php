@@ -5,4 +5,5 @@ return [
   'category' => 'Categories',
   'name' => 'Name',
   'success' => 'success',
+  'validate' => 'validate',
 ];

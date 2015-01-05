@@ -64,11 +64,9 @@ class FeedController extends AuthorizedController {
 
 
 	/**
-	 * Update the specified resource in storage.
-	 * PUT /feed.php/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
+	 * update user's feeds
+	 * @param  [type] $id [description]
+	 * @return [type]     [description]
 	 */
 	public function update($id = null) {
 		if ($id === NULL) {
@@ -84,6 +82,8 @@ class FeedController extends AuthorizedController {
 			$this->getLastArticles();
 			$this->flushFeedCache();
 		}
+
+		return Response::make('Ok', 200);
 	}
 
 	private function getLastArticles() {

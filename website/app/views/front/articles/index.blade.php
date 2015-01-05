@@ -57,7 +57,7 @@
 @endforeach
 <div class="row-fluid">
   <div id="margin-item">
-    <p class="muted text-center">You have no more items.</p>
+    <p class="muted text-center">no more items.</p>
   </div>
 </div>
 @stop
