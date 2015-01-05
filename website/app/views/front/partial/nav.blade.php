@@ -11,7 +11,7 @@
 </ul>
 
 <ul class="nav nav-list">  
-  @foreach ($subscriptions as $folder => $feeds)
+@foreach ($subscriptions as $folder => $feeds)
  <li class="nav-header">
   <a href="{{ route('article.view', $folder) }}"> <span class="glyphicon glyphicon-folder-close"> </span>
      {{ $folder}} 
@@ -21,15 +21,12 @@
    </a>
  </li>
 
- @foreach ($feeds as $feed)
-
- <li><a href="{{ route('article.view', $feed->id) }}">{{ $feed->name }} 
-  @if(isset($counter['feeds'][$feed->id]))
- ({{ $counter['feeds'][$feed->id]}})
-  @endif
-
-
- </a></li>
- @endforeach
+   @foreach ($feeds as $feed)
+     <li style="padding-left:10px"><a href="{{ route('article.view', $feed->id) }}">{{ $feed->name }} 
+      @if(isset($counter['feeds'][$feed->id]))
+     ({{ $counter['feeds'][$feed->id]}})
+      @endif
+      </a></li>
+   @endforeach
  @endforeach
 </ul>
