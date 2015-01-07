@@ -9,9 +9,6 @@ return array(
         'update' => array(
             'email' => array('required', 'email'),
             'pass' => array('min:6', 'max:255'),
-            'username' => array('required', 'min:3', 'max:255', 'alpha'),
-            'last_name' => array('min:3', 'max:255', 'alpha_dash'),
-            'first_name' => array('min:3', 'max:255', 'alpha_dash'),
             ),
         'login' => array(
                 'username' => array('required', 'min:3', 'max:255', 'alpha'),

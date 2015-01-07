@@ -12,12 +12,12 @@ return array(
     'error' => 'syntara::dashboard.error',
 
     // users
-    'users-index' => 'syntara::user.index-user',
-    'users-list' => 'syntara::user.list-users',
-    'user-create' => 'syntara::user.new-user',
-    'user-informations' => 'syntara::user.user-informations',
-    'user-profile' => 'syntara::user.show-user',
-    'user-activation' => 'syntara::user.activation',
+    'users-index' => 'backend.user.index-user',
+    'users-list' => 'backend.user.list-users',
+    'user-create' => 'backend.user.new-user',
+    'user-informations' => 'backend.user.user-informations',
+    'user-profile' => 'backend.user.show-user',
+    'user-activation' => 'backend.user.activation',
 
     // groups
     'groups-index' => 'syntara::group.index-group',

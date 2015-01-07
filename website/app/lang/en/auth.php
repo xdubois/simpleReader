@@ -11,6 +11,7 @@ return array(
   'email' => 'E-mail',
   'validate' => 'Validate',
   'newPassword' => 'Set a new password',
+  'account_banned' => 'Account banned.',
 
   'signin' => array(
     'error'   => 'There was a problem while trying to log you in, please try again.',

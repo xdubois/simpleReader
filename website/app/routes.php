@@ -89,3 +89,51 @@ Route::group(array('prefix' => 'ajax', 'before' => 'ajax.request'), function() {
  Route::post('item-click-count', ['as' => 'ajax.item.click', 'uses' => 'UserController@updateClickCounter']);
  Route::post('update-feed-name', ['as' => 'ajax.update.feed.name', 'uses' => 'FeedController@updateFeedName']);
 });
+
+
+// syntra overried route
+
+/**
+ * Loggued routes with permissions
+ */
+Route::group(array('before' => 'basicAuth|hasPermissions', 'prefix' => Config::get('syntara::config.uri')), function()
+{
+    /**
+     * User routes
+     */
+    Route::get('users', array(
+        'as' => 'listUsers',
+        'uses' => 'CustomUserController@getIndex')
+    );
+
+    Route::delete('user/{userId}', array(
+        'as' => 'deleteUsers',
+        'uses' => 'CustomUserController@delete')
+    );
+
+    Route::post('user/new', array(
+        'as' => 'newUserPost',
+        'uses' => 'CustomUserController@postCreate')
+    );
+
+    Route::get('user/new', array(
+        'as' => 'newUser',
+        'uses' => 'CustomUserController@getCreate')
+    );
+
+    Route::get('user/{userId}', array(
+        'as' => 'showUser',
+        'uses' => 'CustomUserController@getShow')
+    );
+
+    Route::put('user/{userId}', array(
+        'as' => 'putUser',
+        'uses' => 'CustomUserController@putShow')
+    );
+
+    Route::put('user/{userId}/activate', array(
+        'as' => 'putActivateUser',
+        'uses' => 'CustomUserController@putActivate')
+    );
+
+});
