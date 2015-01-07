@@ -89,7 +89,7 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     ->select(DB::raw('count(articles.id) as total, COALESCE(categories.name, "subscriptions") AS name, categories.id'))
     ->whereNull('articles.unread')
     ->where('articles.favorite', FALSE)
-    // ->orWhere('articles.unread', TRUE)
+    ->orWhere('articles.unread', TRUE)
     ->groupBy('categories.name')
     ->orderBy('categories.name', 'DESC')
     ->lists('total', 'name');

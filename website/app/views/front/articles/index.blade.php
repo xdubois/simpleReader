@@ -20,7 +20,7 @@
 @endif
 
 @foreach ($items as $item)  
-<div class="article" id="{{ $item->id }}">    
+<div class="article" id="{{ $item->id }}" data-toggled="0">    
   <div class="row-fluid">
       <div class="span9">
           <h2>
@@ -40,7 +40,7 @@
               @endif
               @lang('article.favorite')
 
-              @if($item->unread)
+              @if($item->unread == NULL || $item->unread == TRUE)
               <button type="button" class="btn btn-default btn-xs toggleread" value="0">
                 @lang('article.read')
               </button>
@@ -54,11 +54,10 @@
 
 
             <div class="span3">
-            <p class="text-right"><em>{{ $item->creator .' '. Carbon\Carbon::parse($item->pubDate)->format('d-m-Y : h:s')  }} </em></p>
+            <p class="text-right paddingRight"><em>{{ $item->creator .' '. Carbon\Carbon::parse($item->pubDate)->format('d-m-Y : h:s')  }} </em></p>
             </div>
           </div>
       </div>
-      <hr />
   </div>
 </div>
 @endforeach

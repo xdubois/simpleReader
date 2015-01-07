@@ -31,3 +31,19 @@ body {
     top: 50px;
     width:200px;
   }
+
+.article {
+  border-left:1px solid #337ab7;
+  background-color: #f7f7f7;
+  padding: 3px; 
+  padding-left: 1%;
+  margin-top: 1%;
+}
+
+.item-click {
+  color:black;
+}
+
+.paddingRight {
+  padding-right: 3px;
+}
