@@ -41,12 +41,18 @@ $(function() {
     });
   });
 
-  $("input.toggleread").click(function () {
-    $(this).toggleClass("glyphicon-star-empty glyphicon-star");
-    var unread = $(this).is(":checked");
-    unread = unread ? 1 : 0;
-    var posting = $.post($('#ajax-url').data('read'), { id: $(this).closest('.article').attr('id'), unread : unread });
+  $("button.toggleread").click(function () {
+    var btn = $(this);
+    var posting = $.post($('#ajax-url').data('read'), { id: $(this).closest('.article').attr('id'), unread : btn.val() });
     posting.done(function (data) {
+      if (btn.val() == 1) {
+        btn.val(0);
+        btn.html(' Mark as read');
+      }
+      else {
+        btn.val(1);
+        btn.html(' Mark as unread');
+      }
       $("#user-navbar").html(data);
     });
   });

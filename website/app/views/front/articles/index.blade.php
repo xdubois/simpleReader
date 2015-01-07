@@ -38,13 +38,20 @@
               @else
                 <span class="glyphicon glyphicon-star-empty togglefavorite"></span>
               @endif
-              Favorite
+              @lang('article.favorite')
+
               @if($item->unread)
-                <input type="checkbox" checked="checked" class="toggleread" />
+              <button type="button" class="btn btn-default btn-xs toggleread" value="0">
+                @lang('article.read')
+              </button>
               @else
-                <input type="checkbox" class="toggleread" />
+              <button type="button" class="btn btn-default btn-xs toggleread" value="1">
+                @lang('article.unread')
+              </button>
               @endif
-              Keep Unread
+             
+
+
 
             <div class="span3">
             <p class="text-right"><em>{{ $item->creator .' '. Carbon\Carbon::parse($item->pubDate)->format('d-m-Y : h:s')  }} </em></p>
