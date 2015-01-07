@@ -6,7 +6,7 @@ class UserTableSeeder extends Seeder {
     $permissions = ['superuser' => 1];
     try { //create admin group
       $adminGroup = Sentry::getGroupProvider()->create(array(
-        'name' => 'lol',
+        'name' => 'admin',
         'permissions' => $permissions,
         ));
     }
