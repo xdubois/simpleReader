@@ -125,6 +125,7 @@ return array(
 		 //dependencies
 		'Cartalyst\Sentry\SentryServiceProvider',
 		'Way\Generators\GeneratorsServiceProvider',
+		'Mrjuliuss\Syntara\SyntaraServiceProvider',
 
 	),
 
