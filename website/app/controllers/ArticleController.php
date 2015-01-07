@@ -9,18 +9,16 @@ class ArticleController extends AuthorizedController {
 	 * @return Response
 	 */
 	public function index() {
-
 		$items = $this->user->getAllArticles();
 		$id = 'all';
 		return View::make('front.articles.index', compact('items', 'id'));
 	}
 
 	/**
-	 * Display the specified resource.
-	 * GET /article/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
+	 * show feed's articles
+	 * @param  string $id     id
+	 * @param  mixed $filter filter
+	 * @return View
 	 */
 	public function show($id = '', $filter = null) {
 		if (is_numeric($id)) {
@@ -47,9 +45,7 @@ class ArticleController extends AuthorizedController {
 
 		}
 
-
 		return View::make('front.articles.index', compact('items', 'id'));
-
 	}
 
 	public function toggleRead() {

@@ -63,7 +63,6 @@ Route::group(array('prefix' => 'feed'), function() {
   Route::get('/destroy/{id}', ['as' => 'feed.destroy', 'uses' => 'FeedController@destroy']);
   Route::get('/update/{id?}', ['as' => 'feed.update', 'uses' => 'FeedController@update']);
   Route::post('store', ['as' => 'feed.store', 'uses' => 'FeedController@store']);
-
 });
 
 Route::group(array('prefix' => 'user'), function() {
@@ -77,6 +76,9 @@ Route::group(array('prefix' => 'category'), function() {
   Route::post('store', ['as' => 'category.store', 'uses' => 'CategoryController@store']);
   Route::post('store/{id}', ['as' => 'category.update', 'uses' => 'CategoryController@update']);
 });
+
+//webcron
+Route::get('webcron/{token}', ['as' => 'feed.update.token', 'uses' => 'FeedController@webCronUpdate']);
 
 //Ajax request
 Route::group(array('prefix' => 'ajax', 'before' => 'ajax.request'), function() {

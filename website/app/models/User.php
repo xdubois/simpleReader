@@ -34,7 +34,6 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     'cache_max' => 'required|numeric'
     );
 
-
   public function feeds() {
     return $this->hasMany('Feed');
   }
