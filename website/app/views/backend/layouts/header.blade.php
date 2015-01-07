@@ -5,16 +5,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="{{ (!empty($siteUrl)) ? $siteUrl : '/'}} " target="_new">
+        <a class="navbar-brand" href="{{ URL::route('home') }} " target="_new">
             {{ (!empty($siteName)) ? $siteName : "Syntara"}}
-
             <div class="visible-sm"><img class="ajax-loader ajax-loader-sm" src="{{ asset('packages/mrjuliuss/syntara/assets/img/ajax-load.gif') }}" style="float: right;"/></div>
         </a>
     </div>
 
     <div class="navbar-collapse collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav">
-            <li class=""><a href="{{ URL::route('home') }}"><i class="glyphicon glyphicon-home"></i> <span>{{ trans('user.app') }}</span></a></li>
             @if (Sentry::check())
                 @if($currentUser->hasAccess(Config::get('syntara::permissions.listUsers')) || $currentUser->hasAccess(Config::get('syntara::permissions.listGroups')))
                 <li class="dropdown" >

@@ -124,3 +124,11 @@ View::composer(['front.feeds.*', 'front.articles.*', 'front.home', 'front.user.*
     $view->with('navbar', null); 
   }
 });
+
+
+//Syntara
+View::composer('syntara::layouts.dashboard.master', function($view) {
+    $view->with('siteName', 'SimpleReader');
+});
+
+

@@ -29,15 +29,19 @@
     <div class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
         <!-- <li class="active"><a href="#">Home</a></li> -->
-          <li><a href="{{ route('feed.index') }}">feeds</a></li>
         @if (Sentry::check())
+          <li><a href="{{ route('feed.index') }}">feeds</a></li>
           <li><a href="{{ route('user.index') }}">settings</a></li>
           @if (Sentry::getUser()->inGroup(Sentry::findGroupByName('admin')))
-            <li><a href="{{ URL::route('indexDashboard')  }}">Admin</a></li>
+            <li><a href="{{ URL::route('indexDashboard') }}">Admin</a></li>
           @endif
-          <li><a href="{{ route('logout') }}">logout</a></li>
         @endif
       </ul>
+      @if (Sentry::check())
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="{{ route('logout') }}">logout</a></li>
+      </ul>
+      @endif
     </div><!--/.nav-collapse -->
   </div>
 </div>
