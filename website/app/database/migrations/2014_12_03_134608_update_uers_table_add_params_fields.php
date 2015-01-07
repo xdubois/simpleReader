@@ -14,7 +14,7 @@ class UpdateUersTableAddParamsFields extends Migration {
 	{
 		Schema::table('users', function(Blueprint $table) {
 			$table->string('synchroCode');
-			$table->integer('articleCacheMax')->default(50);
+			$table->integer('articleCacheMax')->default(10);
 			$table->integer('aricleDownloaded')->nullable()->default(0);
 			$table->integer('articleReaded')->nullable()->default(0);
 			$table->integer('articleClicked')->nullable()->default(0);
