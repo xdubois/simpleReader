@@ -18,6 +18,10 @@ $(function() {
   })
 
   $('.feed-name-update').bind('input', function() {
+    if ($(this).val().length < 3) {
+      return false;
+    }
+
     var attributs = $(this).parent().parent();
     $.ajax({
       type: "POST",
