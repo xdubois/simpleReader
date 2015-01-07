@@ -79,7 +79,8 @@ class CustomUserController extends UserController {
     		$user = Sentry::getUserProvider()->create(array(
     			'email'    => Input::get('email'),
     			'password' => Input::get('pass'),
-    			'permissions' => $permissions
+    			'permissions' => $permissions,
+                'synchroCode' => Str::random(8),
     			));
 
             // activate user

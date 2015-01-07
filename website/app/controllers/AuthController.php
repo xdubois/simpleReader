@@ -87,6 +87,7 @@ class AuthController extends BaseController {
         'email' => Input::get('email'),
         'password' => Input::get('password'),
         'activated' => TRUE,
+        'synchroCode' => Str::random(8),
       ));
 
       Sentry::authenticate(Input::only('email', 'password'), 0);
