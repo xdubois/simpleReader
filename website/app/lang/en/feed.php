@@ -6,4 +6,5 @@ return [
   'category' => 'Category',
   'validate' => 'Validate',
   'success' => 'Succes',
+  'update' => 'update',
 ];

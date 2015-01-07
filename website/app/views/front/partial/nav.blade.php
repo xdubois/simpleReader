@@ -1,5 +1,6 @@
-
-<ul class="nav nav-list"></ul>
+<a href="{{ route('feed.update') }}" style="margin-top:10px" class="btn btn-default">
+    <span class="glyphicon glyphicon-refresh" aria-hidden="true"></span> @lang('feed.update') </a> 
+  </button>
 <ul class="nav nav-list">
   <li><a href="{{ route('article.view', 'all') }}"><i class="glyphicon glyphicon-fire"></i>
     <strong> All items ({{ $counter['total_unread'] }})</strong>
