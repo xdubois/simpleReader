@@ -32,6 +32,9 @@
           <li><a href="{{ route('feed.index') }}">feeds</a></li>
         @if (Sentry::check())
           <li><a href="{{ route('user.index') }}">settings</a></li>
+          @if (Sentry::getUser()->inGroup(Sentry::findGroupByName('admin')))
+            <li><a href="{{ URL::route('indexDashboard')  }}">Admin</a></li>
+          @endif
           <li><a href="{{ route('logout') }}">logout</a></li>
         @endif
       </ul>

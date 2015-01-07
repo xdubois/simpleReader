@@ -10,4 +10,5 @@ return [
   'articleReaded' => 'Article readed',
   'articleDownload' => 'Article downloaded',
   'articleClicked' => 'Article clicked',
+  'app' => 'Application'
 ];
