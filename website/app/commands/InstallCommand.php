@@ -50,15 +50,16 @@ class InstallCommand extends Command {
 
     // Run the Sentry Migrations
     $this->call('migrate', array('--package' => 'cartalyst/sentry'));
+    $this->call('migrate', array('--package' => 'mrjuliuss/syntara'));
     // Run the Migrations
     $this->call('migrate');
 
     //DB seeding
     $this->call('db:seed');
-    
+
     //create default user
     $this->createDefaultUser();
-    
+
     $this->info('installation complete !');
   }
 
