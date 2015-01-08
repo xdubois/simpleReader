@@ -5,7 +5,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="{{ URL::route('home') }} " target="_new">
+        <a class="navbar-brand" href="{{ URL::route('home') }}">
             {{ (!empty($siteName)) ? $siteName : "Syntara"}}
             <div class="visible-sm"><img class="ajax-loader ajax-loader-sm" src="{{ asset('packages/mrjuliuss/syntara/assets/img/ajax-load.gif') }}" style="float: right;"/></div>
         </a>
