@@ -62,7 +62,7 @@ class CustomUserController extends UserController {
     * Create new user
     */
     public function postCreate()
-    {
+    {     
     	try
     	{
     		$validator = new UserValidator(Input::all(), 'create');
@@ -80,8 +80,8 @@ class CustomUserController extends UserController {
     			'email'    => Input::get('email'),
     			'password' => Input::get('pass'),
     			'permissions' => $permissions,
-                'synchroCode' => Str::random(8),
-    			));
+          'synchroCode' => Str::random(8),
+    		));
 
             // activate user
     		$activationCode = $user->getActivationCode();

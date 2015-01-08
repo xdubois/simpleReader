@@ -94,17 +94,6 @@ Route::group(array('prefix' => 'ajax', 'before' => 'ajax.request'), function() {
 
 
 // syntra overrided route
-
-/**
- * Loggued routes without permission
- */
-Route::group(array('before' => 'basicAuth', 'prefix' => Config::get('syntara::config.uri')), function() {
-    Route::get('', array(
-        'as' => 'indexDashboard',
-        'uses' => 'CustomUserController@getIndex')
-    );
-});
-
 /**
  * Loggued routes with permissions
  */
@@ -112,6 +101,7 @@ Route::group(array('before' => 'basicAuth|hasPermissions', 'prefix' => Config::g
     /**
      * User routes
      */
+    
     Route::get('users', array(
         'as' => 'listUsers',
         'uses' => 'CustomUserController@getIndex')

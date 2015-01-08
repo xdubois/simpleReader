@@ -13,7 +13,7 @@ return array(
         'login' => array(
                 'username' => array('required', 'min:3', 'max:255', 'alpha'),
                 'email' => array('required', 'email'),
-                'pass' => array('required', 'min:6', 'max:255'),
+                'pass' => array('required', 'min:1', 'max:255'),
             ),
     ),
     'group' => array(
