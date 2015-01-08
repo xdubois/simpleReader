@@ -68,7 +68,7 @@ class FeedController extends AuthorizedController {
 	 * @param  [type] $id [description]
 	 * @return [type]     [description]
 	 */
-	public function update($id = null, $token = '') {
+	public function update($id = null) {
 		if ($id === NULL) {
 			$feeds = $this->user->feeds()->get();
 			foreach ($feeds as $feed) {
@@ -83,7 +83,7 @@ class FeedController extends AuthorizedController {
 			$this->flushFeedCache();
 		}
 
-		return Response::make('Ok', 200);
+		return Redirect::back();
 	}
 
 	/**

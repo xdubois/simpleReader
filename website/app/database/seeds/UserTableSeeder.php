@@ -12,22 +12,6 @@ class UserTableSeeder extends Seeder {
     }
     catch(Exception $e) {}
 
-    try {
-      $user = Sentry::getUserProvider()->create(array(
-        'email'    => 'admin@simplereader.com',
-        'password' => 'admin',
-        'permissions' => $permissions,
-        'synchroCode' => Str::random(8),
-        ));
-
-      // activate user
-      $activationCode = $user->getActivationCode();
-      $user->attemptActivation($activationCode);
-
-      $user->addGroup($adminGroup);
-    }
-    catch(Exception $e) {}
-
   }
 
 
