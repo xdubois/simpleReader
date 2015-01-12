@@ -17,6 +17,17 @@ PHP from command line
 * Create an empty database
 * go to "website" folder with a command line interpreter
 * run: composer update
+* Create a `.env.local.php` file in the `website/laravel/` folder and put in the following, changing the values as necessary or run the command "php artisan db:configure":
+```
+<?php
+
+return array(
+  'DB_HOST' => 'localhost',
+  'DB_NAME' => 'simplereader',
+  'DB_USERNAME' => 'root',
+  'DB_PASSWORD' => '',
+);
+```
 * run: php artisan app:install
 
 You're app is now ready to use.
