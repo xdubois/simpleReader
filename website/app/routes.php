@@ -11,12 +11,8 @@
 |
 */
 
-Route::get('/test', function() {
-});
-
-
+//Home route
 Route::get('/', ['as' => 'home', 'uses' => 'ArticleController@index']);
-
 Route::get('/articles', 'ArticleController@show');
 Route::get('/articles/{id}/{filter?}/', ['as' => 'article.view', 'uses' => 'ArticleController@show']);
 
@@ -101,40 +97,32 @@ Route::group(array('before' => 'basicAuth|hasPermissions', 'prefix' => Config::g
     /**
      * User routes
      */
-    
     Route::get('users', array(
         'as' => 'listUsers',
         'uses' => 'CustomUserController@getIndex')
     );
-
     Route::delete('user/{userId}', array(
         'as' => 'deleteUsers',
         'uses' => 'CustomUserController@delete')
     );
-
     Route::post('user/new', array(
         'as' => 'newUserPost',
         'uses' => 'CustomUserController@postCreate')
     );
-
     Route::get('user/new', array(
         'as' => 'newUser',
         'uses' => 'CustomUserController@getCreate')
     );
-
     Route::get('user/{userId}', array(
         'as' => 'showUser',
         'uses' => 'CustomUserController@getShow')
     );
-
     Route::put('user/{userId}', array(
         'as' => 'putUser',
         'uses' => 'CustomUserController@putShow')
     );
-
     Route::put('user/{userId}/activate', array(
         'as' => 'putActivateUser',
         'uses' => 'CustomUserController@putActivate')
     );
-
 });
