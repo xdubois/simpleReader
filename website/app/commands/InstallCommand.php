@@ -44,11 +44,12 @@ class InstallCommand extends Command {
     $this->comment('=====================================');
     $this->comment('');
     // Generate the Application Encryption key
-    // $this->call('key:generate');
+    $this->call('key:generate');
 
     $this->configureDB();
 
     // Run the Sentry Migrations
+    $this->call('migrate:install');
     $this->call('migrate', array('--package' => 'cartalyst/sentry'));
     $this->call('migrate', array('--package' => 'mrjuliuss/syntara'));
     // Run the Migrations

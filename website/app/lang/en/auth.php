@@ -12,6 +12,7 @@ return array(
   'validate' => 'Validate',
   'newPassword' => 'Set a new password',
   'account_banned' => 'Account banned.',
+  'account_not_found' => 'Error with username/password',
 
   'signin' => array(
     'error'   => 'There was a problem while trying to log you in, please try again.',
