@@ -46,8 +46,6 @@ class InstallCommand extends Command {
     // Generate the Application Encryption key
     $this->call('key:generate');
 
-    $this->configureDB();
-
     // Run the Sentry Migrations
     $this->call('migrate:install');
     $this->call('migrate', array('--package' => 'cartalyst/sentry'));
@@ -64,16 +62,7 @@ class InstallCommand extends Command {
     $this->info('installation complete !');
   }
 
-  private function configureDB() {
-    $this->info('Configure database');
-    $settings['DB_HOST'] = $this->ask('host:');
-    $settings['DB_NAME'] = $this->ask('database:');
-    $settings['DB_USERNAME'] = $this->ask('username:');
-    $settings['DB_PASSWORD'] = $this->secret('password:');
-    $settings['DB_PASSWORD'] = is_null($settings['DB_PASSWORD']) ? '' : $settings['DB_PASSWORD'];
-    $settings = var_export($settings, 1);
-    File::put(app_path() .'/../.env.local.php' ,  "<?php\n return $settings ;");
-  }
+
 
   private function createDefaultUser() {
     $this->info('Create admin user');
