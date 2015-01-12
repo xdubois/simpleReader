@@ -16,6 +16,7 @@ PHP from command line
 * Clone repo to your working dir
 * go to "website" folder with a command line interpreter
 * run: composer update
+* create an empty database
 * run: php artisan app:install
 
 You're app is now ready to use.
