@@ -8,13 +8,7 @@ class CategoryController extends AuthorizedController {
 		$this->category = $category;
 		parent::__construct();
 	}
-	/**
-	 * Update the specified resource in storage.
-	 * PUT /category/{id}
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+
 	public function updateFeedCategory() {
 		
 		$feed = Feed::findOrFail(Input::get('feed_id'));

@@ -81,6 +81,10 @@ class User extends SentryUserModel implements UserInterface, RemindableInterface
     ->get(); 
   }
 
+  /**
+   * Generate user's feed list menu
+   * @return Html updated menu
+   */
   public function renderMenu() {
 
     $counter = $this->feeds()

@@ -7,56 +7,56 @@ use MrJuliuss\Syntara\Services\Validators\User as UserValidator;
 class CustomUserController extends UserController {
 
 
-		/**
+    /**
     * Display a list of all users
     *
     * @return Response
     */
-		public function getIndex()
-		{
+    public function getIndex()
+    {
         // get alls users
-			$emptyUsers =  Sentry::getUserProvider()->getEmptyUser();
+     $emptyUsers =  Sentry::getUserProvider()->getEmptyUser();
 
         // users search
-			$userId = Input::get('userIdSearch');
-			if(!empty($userId))
-			{
-				$emptyUsers = $emptyUsers->where('users.id', $userId);
-			}
+     $userId = Input::get('userIdSearch');
+     if(!empty($userId))
+     {
+      $emptyUsers = $emptyUsers->where('users.id', $userId);
+    }
 
 
-			$email = Input::get('emailSearch');
-			if(!empty($email))
-			{
-				$emptyUsers = $emptyUsers->where('email', 'LIKE', '%'.$email.'%');
-			}
+    $email = Input::get('emailSearch');
+    if(!empty($email))
+    {
+      $emptyUsers = $emptyUsers->where('email', 'LIKE', '%'.$email.'%');
+    }
 
-			$bannedUsers = Input::get('bannedSearch');
-			if(isset($bannedUsers) && $bannedUsers !== "")
-			{
-				$emptyUsers = $emptyUsers->join('throttle', 'throttle.user_id', '=', 'users.id')
-				->where('throttle.banned', '=', $bannedUsers)
-				->select('users.id', 'users.email', 'users.permissions', 'users.activated');
-			}
+    $bannedUsers = Input::get('bannedSearch');
+    if(isset($bannedUsers) && $bannedUsers !== "")
+    {
+      $emptyUsers = $emptyUsers->join('throttle', 'throttle.user_id', '=', 'users.id')
+      ->where('throttle.banned', '=', $bannedUsers)
+      ->select('users.id', 'users.email', 'users.permissions', 'users.activated');
+    }
 
-			$emptyUsers->distinct();
+    $emptyUsers->distinct();
 
-			$users = $emptyUsers->paginate(Config::get('syntara::config.item-perge-page'));
-			$datas['links'] = $users->links();
-			$datas['users'] = $users;
+    $users = $emptyUsers->paginate(Config::get('syntara::config.item-perge-page'));
+    $datas['links'] = $users->links();
+    $datas['users'] = $users;
 
         // ajax request : reload only content container
-			if(Request::ajax())
-			{
-				$html = View::make(Config::get('syntara::views.users-list'), array('datas' => $datas))->render();
+    if(Request::ajax())
+    {
+      $html = View::make(Config::get('syntara::views.users-list'), array('datas' => $datas))->render();
 
-				return Response::json(array('html' => $html));
-			}
+      return Response::json(array('html' => $html));
+    }
 
-			$this->layout = View::make(Config::get('syntara::views.users-index'), array('datas' => $datas));
-			$this->layout->title = trans('syntara::users.titles.list');
-			$this->layout->breadcrumb = Config::get('syntara::breadcrumbs.users');
-		}
+    $this->layout = View::make(Config::get('syntara::views.users-index'), array('datas' => $datas));
+    $this->layout->title = trans('syntara::users.titles.list');
+    $this->layout->breadcrumb = Config::get('syntara::breadcrumbs.users');
+  }
 
     /**
     * Create new user
@@ -81,7 +81,7 @@ class CustomUserController extends UserController {
     			'password' => Input::get('pass'),
     			'permissions' => $permissions,
           'synchroCode' => Str::random(8),
-    		));
+          ));
 
             // activate user
     		$activationCode = $user->getActivationCode();
