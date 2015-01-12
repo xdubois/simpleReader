@@ -14,6 +14,7 @@ PHP from command line
 ## Installation ##
 
 * Clone repo to your working dir or download the last version from https://github.com/xdubois/simpleReader/archive/master.zip
+* Create an empty database
 * go to "website" folder with a command line interpreter
 * run: composer update
 * run: php artisan app:install
