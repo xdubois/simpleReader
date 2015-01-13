@@ -55,6 +55,10 @@ class InstallCommand extends Command {
     //DB seeding
     $this->call('db:seed');
 
+    // publish syntara assets
+    $this->call('asset:publish', array('package' => 'mrjuliuss/syntara' ) );
+
+
     //create default user
     $this->createDefaultUser();
 
