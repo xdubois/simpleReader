@@ -47,7 +47,6 @@ class InstallCommand extends Command {
     $this->call('key:generate');
 
     // Run the Sentry Migrations
-    $this->call('migrate:install');
     $this->call('migrate', array('--package' => 'cartalyst/sentry'));
     $this->call('migrate', array('--package' => 'mrjuliuss/syntara'));
     // Run the Migrations
