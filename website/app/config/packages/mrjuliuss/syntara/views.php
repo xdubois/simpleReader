@@ -23,7 +23,7 @@ return array(
     'groups-index' => 'syntara::group.index-group',
     'groups-list' => 'syntara::group.list-groups',
     'group-create' => 'syntara::group.new-group',
-    'users-in-group' => 'syntara::group.list-users-group',
+    'users-in-group' => 'backend.group.list-users-group',
     'group-edit' => 'syntara::group.show-group',
 
     // permissions
